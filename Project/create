@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+
+    read -p "Enter Table Name: " nametable
+    nametable=`echo "$nametable" | tr " " "_"`
+    if [[ $nametable =~ ^[a-zA-Z_]+$  ]]; then
+        if [[ -f ./$dbname/$nametable ]]; then
+            echo "Error: Table '$nametable' Already Exists."
+        else 
+            read -p "Enter Count Columns: " num_columns
+            touch ./$dbname/$nametable  ## ../$name/$nametable.meta
+            chmod u+x ./$dbname/$nametable  ##../$name/$nametable.meta
+            arr=()
+            for ((i=1; i<=$num_columns; i++)); do
+                read -p "Enter Column [$i] Name: " col
+                select data in "Integer" "String"
+                do
+                    case $data in
+                        "Integer" ) datatype+="<int> :"; break;;
+                        "String" ) datatype+="<str> :"; break;;
+                        * ) echo "Invalid choice";;
+                    esac
+                done
+            echo -n " $col : " >> $nametable.meta 
+            echo -n " $col : " >> $nametable 
+            done
+            echo "" >> $nametable.meta 
+            echo "" >> $nametable 
+            echo -n "$datatype" >> $nametable.meta 
+    
+            # echo -e "$datatype" >> $nametable.Meta
+            echo "Table '$nametable' Created Successfully."
+        fi
+    else
+        echo "Error: Invalid Table Name. Please Try Again."
+    fi

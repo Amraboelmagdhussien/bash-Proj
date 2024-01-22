@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+PATH=$PATH:/././Project
+
+#Checking if DB FOLDER EXIST OR NOT 
+
+if [[ -d Database ]];then
+    echo "Already Exist"
+    echo "Menu"
+     .  ./Showmenu
+else 
+    mkdir Database
+    echo "Database is Created Succefully"
+    . ./Showmenu
+fi
+
+# read -p "Please Enter Your Database Name : " name
+#intilized for Loop  that contians menu
+

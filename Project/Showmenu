@@ -1,0 +1,93 @@
+#!/usr/bin/bash
+PATH=$PATH:~/Private/Project
+
+create() {
+    read -p "Please Enter Your Database Name : " name
+    if [[ -d ./$name ]];then
+        echo "File Exist"
+    else 
+        cd Database
+        mkdir $name
+        cd ../
+    fi
+}
+
+
+#crud  Database
+
+while true; do
+    
+    echo "1-Create DB"
+    echo "2-List DB"
+    echo "3-Connect DB"
+    echo "4-DROP DB"
+    echo "5-Delete Certain DB"
+    echo "6-Exit"
+	read -p "Please Select An Item : " choice
+	case $choice in 
+		1 )
+			create
+        ;;
+		2 )
+            echo "*******List DataBases*********"
+            echo "********************************"
+                ls Database
+            echo "********************************"
+        
+        ;;
+		3 )
+			ls Database
+            echo "********************************"
+            read -p "Enter Then Database Name you want to connect : " dbname
+            if [[ -d "Database/$dbname" ]]; then
+            chmod u+rwx ./Database/$dbname
+            cd Database/$dbname
+            pwd
+            Tables
+            else
+            echo "Database Not Found"
+            fi
+        ;;
+		4 )
+            echo "Are You Sure You Want to Delete DB"
+            echo "Your Data Will be Delete and Won't be Recoverble"
+            echo "**********************************"
+            read -p "Are you Sure to be Deleted [Y/N] : " response
+            if [[ $response == [yY] ]];then
+            rm -r Database
+            exit
+            elif [[ $response == [nN] ]];then
+                echo "Your Data won't be Deleted"
+            else
+                echo "Enter Valid Response"
+            fi
+        ;;
+        5)
+            ls Database
+            read -p "Which Database Do you want to Delete : " delDb
+            cd Database
+            read -p "Are You Sure Do you want to Delete This Database $delDb if Yes Press Y and No press N : " res
+            if [[ -e $delDb ]];then
+                if [[ "$res" == [yY] ]];then
+                    rm -r $delDb
+                    cd ../
+                    echo "Database Succesfully Deleted"
+                else 
+                    echo Going Back to menu
+                fi
+            else 
+                echo Database Doesnt Exist
+            fi
+
+
+
+        ;;
+		6 )
+            clear
+			echo "Thank You"
+            # sleep 2
+			exit;;
+		* )
+			echo "Invalid option. Please choose a number between 1 and 5."
+	esac
+done

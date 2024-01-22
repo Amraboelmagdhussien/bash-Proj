@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+read -p "Insert Into: " nametable
+
+if [ -f "$nametable" ]; then
+    chmod u+rwx "./$name/$nametable"
+    header=`awk 'NR==1' "$nametable`
+    num_columns=$(awk -F ':' '{print NF}' <<< "$header")
+    echo  " " >> "$nametable"
+    for ((i = 1; i <= num_columns; i++)); do
+        read -p "Enter Data for Column $i ($header): " data
+        echo -n "$data : " >> "$nametable"
+    done
+    echo "Data Inserted Into Table '$nametable'."
+    awk -F ':' '{print "Row "[NR]"  >> " $0}' "$nametable"
+else
+    echo "Error: Table '$nametable' Not Found."
+fi  

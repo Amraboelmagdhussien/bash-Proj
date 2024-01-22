@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+
+
+
+#PK
+#FK
+#COLUMNS 
+#ROWS
+
+
+
+
+
+
+while true; do
+    select var in "Create Table" "Show All Tables" "Delete Table" "Update Table" "Return to Menu";do
+        case $REPLY in
+            1)
+                create
+            ;;
+            2)
+               show_data.sh
+            #    show_table.sh  $dbname
+            ;;
+            3)
+               delete_table.sh 
+            ;;
+            4)
+               insert_db
+            ;;
+            
+            5)
+            exit
+            ;;
+            *)
+            echo "Invalid option. Please choose a number between 1 and 5."
+            ;;
+        esac
+    done
+done
